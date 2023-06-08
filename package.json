@@ -2,12 +2,20 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:search": "turbo run build --filter @mf/search",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "turbo": "latest"
+    "@types/node": "^17.0.12",
+    "@types/webpack": "^5.28.1",
+    "ts-node": "^10.9.1",
+    "ts-loader": "9.4.2",
+    "turbo": "latest",
+    "typescript": "5.0.2",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "test_module_federation"
