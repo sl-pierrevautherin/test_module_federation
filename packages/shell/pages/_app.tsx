@@ -1,16 +1,20 @@
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
-const App = dynamic(
-  async () => {
-    return import("../src/asyncApp");
-  },
-  {
-    ssr: false,
-  }
-);
+// const App = dynamic(
+//   async () => {
+//     return import("../src/asyncApp");
+//   },
+//   {
+//     ssr: false,
+//   }
+// );
 
-function MyApp(props) {
-  return <App {...props} />;
-}
+// function MyApp(props) {
+//   return <App {...props} />;
+// }
 
-export default MyApp;
+// export default MyApp;
+
+const App = ({ Component, pageProps }) => <Component {...pageProps} />;
+
+export default App;

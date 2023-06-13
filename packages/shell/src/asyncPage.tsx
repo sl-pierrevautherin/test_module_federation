@@ -1,26 +1,12 @@
 import dynamic from "next/dynamic";
 
-const RemoteButton = dynamic(
-  async () => {
-    const zz = import("remote/Button");
-    console.log("Button", zz);
-    return zz;
-  },
-  {
-    ssr: false,
-  }
-);
+const RemoteButton = dynamic(async () => import("remote/Button"), {
+  ssr: false,
+});
 
-const RemoteSearch = dynamic(
-  async () => {
-    const zz = import("search/Search");
-    console.log("Search: ", zz);
-    return zz;
-  },
-  {
-    ssr: false,
-  }
-);
+const RemoteSearch = dynamic(async () => import("search/Search"), {
+  ssr: false,
+});
 
 const AsyncPage = () => (
   <>

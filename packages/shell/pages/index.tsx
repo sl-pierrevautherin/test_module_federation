@@ -1,16 +1,26 @@
-import dynamic from "next/dynamic";
+import React, { Suspense } from "react";
 
-const Page = dynamic(
-  async () => {
-    const yy = await import("../src/asyncPage");
-    console.log(yy);
-    return yy;
+import dynamic from "next/dynamic";
+const RemoteNavSSR = dynamic(
+  () => {
+    const zz = import("nav/nav");
+    console.log("nav", zz);
+    return zz;
   },
-  {
-    ssr: false,
-  }
+  { suspense: true }
 );
 
-const MyPage = () => <Page />;
+const Page = dynamic(async () => import("../src/asyncPage"), {
+  ssr: false,
+});
+
+const MyPage = () => {
+  return (
+    <>
+      <Page />;
+      <RemoteNavSSR />
+    </>
+  );
+};
 
 export default MyPage;
