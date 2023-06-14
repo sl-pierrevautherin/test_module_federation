@@ -6,6 +6,7 @@ const navRemote = (isServer) => {
 };
 
 module.exports = {
+  reactStrictMode: false,
   webpack(config, options) {
     config.plugins.push(
       new NextFederationPlugin({

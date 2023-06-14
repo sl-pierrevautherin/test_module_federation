@@ -1,13 +1,14 @@
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
+import RemoteNavSSR from "../components/RemoteNavSSR";
 
-const RemoteNavSSR = dynamic(
-  () => {
-    const zz = import("../components/RemoteNavSSR");
-    console.log("RemoteNavSSR", zz);
-    return zz;
-  },
-  { suspense: true }
-);
+// const RemoteNavSSR = dynamic(
+//   () => {
+//     const zz = import("../components/RemoteNavSSR");
+//     console.log("RemoteNavSSR", zz);
+//     return zz;
+//   },
+//   { suspense: true }
+// );
 
 export const getServerSideProps = async () => {
   const props = await new Promise((resolve) =>
@@ -20,6 +21,6 @@ export const getServerSideProps = async () => {
   return { props };
 };
 
-const Page = (props) => <RemoteNavSSR {...props} />;
+const Page = (props) => <RemoteNavSSR {...props} key="remoteNavSSR" />;
 
 export default Page;

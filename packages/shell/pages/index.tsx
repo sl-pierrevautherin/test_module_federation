@@ -1,12 +1,9 @@
-import React, { Suspense } from "react";
-
 import type { GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import RemoteNavSSR from "nav/nav";
 
-const RemoteNavSSR = dynamic(() => import("nav/nav"), {
-  suspense: true,
-  ssr: true,
-});
+// https://github.com/vercel/next.js/discussions/37631
 
 const RemoteButton = dynamic(async () => import("remote/Button"), {
   ssr: false,
@@ -34,9 +31,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const MyPage = (props) => {
   return (
     <>
-      <RemoteNavSSR {...props} />
-      <RemoteSearch />
-      <RemoteButton />
+      <>
+        <Suspense fallback={null}>
+          <RemoteNavSSR {...props} key="SSR" />
+        </Suspense>
+      </>
+      <RemoteSearch key="search" />
+      <RemoteButton key="button" />
     </>
   );
 };
