@@ -8,7 +8,7 @@ module.exports = {
         name: "nav",
         filename: "static/chunks/remoteEntry.js",
         exposes: {
-          "./nav": "./components/RemoteNavSSR.js",
+          "./nav": "./pages/index.js",
         },
         shared: {},
         extraOptions: {
