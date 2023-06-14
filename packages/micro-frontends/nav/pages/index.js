@@ -1,26 +1,16 @@
-import React, { Fragment, Suspense } from "react";
-import Head from "next/head";
-import dynamic from "next/dynamic";
+import RemoteNavSSR from "../components/RemoteNavSSR";
 
-const Home = ({ loaded }) => {
-  return (
-    <div>
-      <Head>
-        <title>Home</title>
-        <link rel="icon" href="/nextjs-ssr/home/public/favicon.ico" />
-      </Head>
-
-      <div className="hero">
-        <h1 className="title">
-          Welcome to Next.js on Webpack 5! <code>home</code>
-        </h1>
-      </div>
-    </div>
+export const getServerSideProps = async () => {
+  const props = await new Promise((resolve) =>
+    setTimeout(
+      () => resolve({ getSSRprops: "some getServerSideProps 😎 " }),
+      300
+    )
   );
-};
-//
-Home.getInitialProps = async (ctx) => {
-  return {};
+  console.log("😺  ~ Fetch complete", props);
+  return { props };
 };
 
-export default Home;
+const Page = (props) => <RemoteNavSSR {...props} />;
+
+export default Page;

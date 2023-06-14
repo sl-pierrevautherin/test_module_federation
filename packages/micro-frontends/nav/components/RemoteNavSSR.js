@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 
 export const HelloWorld = dynamic(
@@ -10,14 +9,15 @@ export const HelloWorld = dynamic(
   { suspense: true }
 );
 
-const Nav = () => {
-  console.log("Nav component with SSR !!");
+const RemoteNavSSR = (props) => {
+  console.log("Hello from MF Nav - a NextJS component with SSR !!", props);
   return (
     <nav>
-      Nav !
-      <HelloWorld />
+      RemoteNavSSR - a NextJS ModuleFederation component with SSR
+      <p>props: {props.getSSRprops}</p>
+      {/* <HelloWorld /> */}
     </nav>
   );
 };
 
-export default Nav;
+export default RemoteNavSSR;

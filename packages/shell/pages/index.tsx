@@ -1,23 +1,27 @@
-import React, { Suspense } from "react";
-
 import dynamic from "next/dynamic";
+
 const RemoteNavSSR = dynamic(
   () => {
     const zz = import("nav/nav");
-    console.log("nav", zz);
+    console.log("RemoteNavSSR", zz);
     return zz;
   },
   { suspense: true }
 );
 
-const Page = dynamic(async () => import("../src/asyncPage"), {
+const RemoteButton = dynamic(async () => import("remote/Button"), {
+  ssr: false,
+});
+
+const RemoteSearch = dynamic(async () => import("search/Search"), {
   ssr: false,
 });
 
 const MyPage = () => {
   return (
     <>
-      <Page />;
+      <RemoteSearch />
+      <RemoteButton />
       <RemoteNavSSR />
     </>
   );
