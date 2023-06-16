@@ -1,23 +1,29 @@
 {
   "name": "shell",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build:client": "rimraf dist/client && webpack --mode production --progress --config config/webpack.client.js",
+    "build:server": "rimraf dist/server && webpack --mode production --progress --config config/webpack.server.js",
+    "serve": "node dist/server/main.js",
+    "dev:client": "webpack --watch --mode development --config config/webpack.client.js",
+    "dev:server": "webpack --watch --mode development --config config/webpack.server.js & pnpm serve",
+    "build": "pnpm build:server && pnpm build:client"
   },
   "dependencies": {
-    "@module-federation/nextjs-mf": "^6.5.1",
-    "next": "^13.4.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@fastify/static": "^6.10.2",
+    "fastify": "^4.18.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.12",
-    "@types/react": "^18.0.22",
-    "@types/react-dom": "^18.0.7",
-    "typescript": "^4.5.3"
+    "@module-federation/node": "0.12.2",
+    "@types/react": "18.0.38",
+    "@types/react-dom": "18.0.11",
+    "@types/react-helmet": "6.1.5",
+    "rimraf": "3.0.2",
+    "serve": "14.2.0",
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.1"
   }
 }
