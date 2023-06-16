@@ -7,6 +7,7 @@
     "serve": "node dist/server/main.js",
     "dev:client": "webpack --watch --mode development --config config/webpack.client.js",
     "dev:server": "webpack --watch --mode development --config config/webpack.server.js & pnpm serve",
+    "dev": "pnpm dev:server & pnpm dev:client",
     "build": "pnpm build:server && pnpm build:client"
   },
   "dependencies": {
