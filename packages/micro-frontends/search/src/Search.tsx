@@ -1,8 +1,20 @@
+import { useEffect, useState } from "react";
+
 export const Search = () => {
-  console.log("Hello from MF Search!");
+  const [hydrated, setHydrated] = useState(false);
+  console.log("Hello from Search !");
+  useEffect(() => {
+    console.log("client-side render");
+    if (!hydrated) {
+      setTimeout(() => {
+        setHydrated(true);
+      }, 2000);
+    }
+  }, [hydrated]);
   return (
     <div>
-      Search component - a Client-rendered React ModuleFederation component
+      Search component - a Server-side rendered React ModuleFederation component
+      {hydrated && " - with hydration 😎  !"}
     </div>
   );
 };

@@ -4,24 +4,22 @@
   "scripts": {
     "build:client": "rimraf dist/client && webpack --mode production --progress --config config/webpack.client.js",
     "build:server": "rimraf dist/server && webpack --mode production --progress --config config/webpack.server.js",
-    "serve": "node dist/server/main.js",
+    "serve": "node --watch dist/server/main.js",
+    "build": "pnpm build:server && pnpm build:client",
     "dev:client": "webpack --watch --mode development --config config/webpack.client.js",
-    "dev:server": "webpack --watch --mode development --config config/webpack.server.js & pnpm serve",
-    "dev": "pnpm dev:server & pnpm dev:client",
-    "build": "pnpm build:server && pnpm build:client"
+    "dev:server": "pnpm build:server & pnpm serve",
+    "dev": "pnpm dev:server & pnpm dev:client"
   },
   "dependencies": {
-    "@fastify/static": "^6.10.2",
-    "fastify": "^4.18.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-helmet": "6.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@fastify/static": "^6.10.2",
+    "fastify": "^4.18.0",
     "@module-federation/node": "0.12.2",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
-    "@types/react-helmet": "6.1.5",
     "rimraf": "3.0.2",
     "serve": "14.2.0",
     "webpack": "5.75.0",

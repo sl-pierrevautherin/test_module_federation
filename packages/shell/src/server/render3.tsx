@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+/* import { Helmet } from "react-helmet";
 import { renderToString, renderToPipeableStream } from "react-dom/server";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -22,3 +22,4 @@ export default async (_: FastifyRequest, res: FastifyReply) => {
       </div>
       <script async data-chunk="main" src="http://localhost:3000/static/main.js"></script></body></html>`);
 };
+ */

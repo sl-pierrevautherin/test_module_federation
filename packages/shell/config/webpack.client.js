@@ -1,27 +1,48 @@
 const path = require("path");
 const shared = require("./webpack.shared");
-const deps = require("../package.json").dependencies;
-const { ModuleFederationPlugin } = require("webpack").container;
+const { UniversalFederationPlugin } = require("@module-federation/node");
+
+const pkgDependencies = require("../package.json").dependencies;
+console.log({ pkgDependencies });
+console.log(...Object.keys(pkgDependencies));
+
+const sharedDeps = [
+  ...Object.keys(pkgDependencies),
+  "react/jsx-runtime",
+  "react-dom/client",
+].reduce((shared, name) => {
+  shared[name] = {
+    eager: false,
+    singleton: true,
+    requiredVersion: pkgDependencies[name],
+  };
+
+  return shared;
+}, {});
+
+console.log({ sharedDeps });
 
 module.exports = {
   ...shared,
   name: "client",
   entry: "./src/client/index.tsx",
+  target: "web",
   cache: false,
   output: {
     path: path.resolve(__dirname, "../dist/client"),
     filename: "[name].js",
     chunkFilename: "[name].js",
-    publicPath: "http://localhost:3000/static/",
+    publicPath: "http://localhost:3005/static/",
   },
   plugins: [
-    new ModuleFederationPlugin({
-      name: "shell",
-      filename: "container.js",
+    new UniversalFederationPlugin({
+      isServer: false,
+      name: "client",
       remotes: {
-        remote1: "remote1@http://localhost:3001/client/remoteEntry.js",
+        search: "search@http://localhost:3002/client/remoteEntry.js",
       },
-      shared: [{ react: deps.react, "react-dom": deps["react-dom"] }],
+      filename: "remoteEntry.js",
+      shared: sharedDeps,
     }),
   ],
 };

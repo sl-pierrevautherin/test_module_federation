@@ -4,6 +4,6 @@
   "exclude": ["node_modules"],
   "compilerOptions": {
     "declaration": true,
-    "outDir": "./dist/client"
+    "outDir": "./dist/"
   }
 }

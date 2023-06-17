@@ -1,15 +1,13 @@
 const path = require("path");
 const shared = require("./webpack.shared");
-const {
-  NodeFederationPlugin,
-  StreamingTargetPlugin,
-} = require("@module-federation/node");
-const deps = require("../package.json").dependencies;
+const { UniversalFederationPlugin } = require("@module-federation/node");
+
+const pkgDependencies = require("../package.json").dependencies;
 
 module.exports = {
   ...shared,
   name: "server",
-  target: false,
+  target: "node",
   entry: "./src/server/index.ts",
 
   output: {
@@ -17,25 +15,33 @@ module.exports = {
     filename: "[name].js",
     libraryTarget: "commonjs-module",
   },
-  plugins: [
-    new NodeFederationPlugin({
-      name: "shell",
-      library: { type: "commonjs-module" },
-      filename: "remoteEntry.js",
-      remotes: {
-        remote1: "remote1@http://localhost:3001/server/remoteEntry.js",
-      },
-      shared: [{ react: deps.react, "react-dom": deps["react-dom"] }],
-    }),
-    new StreamingTargetPlugin({
-      name: "shell",
-      library: { type: "commonjs-module" },
-      remotes: {
-        remote1: "remote1@http://localhost:3001/server/remoteEntry.js",
-      },
-    }),
-  ],
+
   stats: {
     colors: true,
   },
+
+  plugins: [
+    new UniversalFederationPlugin({
+      isServer: true,
+      library: { type: "commonjs-module" },
+      name: "client",
+      remotes: {
+        search: "search@http://localhost:3002/server/remoteEntry.js",
+      },
+      filename: "remoteEntry.js",
+      shared: [
+        ...Object.keys(pkgDependencies),
+        "react/jsx-runtime",
+        "react-dom/client",
+      ].reduce((shared, name) => {
+        shared[name] = {
+          eager: false,
+          singleton: true,
+          requiredVersion: pkgDependencies[name],
+        };
+
+        return shared;
+      }, {}),
+    }),
+  ],
 };
