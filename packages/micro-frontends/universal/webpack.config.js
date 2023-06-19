@@ -40,13 +40,9 @@ const clientConfig = {
       exposes: {
         "./Search": "./src/Search",
       },
-      shared: [
-        ...Object.keys(pkgDependencies),
-        "react/jsx-runtime",
-        "react-dom/client",
-      ].reduce((shared, moduleName) => {
+      shared: [...Object.keys(pkgDependencies)].reduce((shared, moduleName) => {
         shared[moduleName] = {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: pkgDependencies[moduleName],
           strictVersion: false,
@@ -85,7 +81,7 @@ const serverConfig = {
         "react-dom/client",
       ].reduce((shared, moduleName) => {
         shared[moduleName] = {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: pkgDependencies[moduleName],
           strictVersion: false,

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "serve": "serve dist -p 3002",
-    "dev": "webpack --watch & pnpm serve",
+    "dev": "pnpm build && pnpm serve",
     "start": "webpack-cli serve"
   },
   "dependencies": {

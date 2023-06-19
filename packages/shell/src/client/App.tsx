@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // @ts-expect-error @todo fix types
 import RemoteSearch from "search/Search";
 
-console.log(RemoteSearch);
+console.log("remote Search", RemoteSearch);
 
 const App = () => {
   const [hydrated, setHydrated] = useState(false);

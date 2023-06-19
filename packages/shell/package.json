@@ -2,13 +2,12 @@
   "name": "shell",
   "version": "0.0.0",
   "scripts": {
-    "build:client": "rimraf dist/client && webpack --mode production --progress --config config/webpack.client.js",
-    "build:server": "rimraf dist/server && webpack --mode production --progress --config config/webpack.server.js",
-    "serve": "node --watch dist/server/main.js",
+    "clean": "rimraf dist",
+    "build:client": "webpack --mode production --progress --config config/webpack.client.js",
+    "build:server": "webpack --mode production --progress --config config/webpack.server.js",
     "build": "pnpm build:server && pnpm build:client",
-    "dev:client": "webpack --watch --mode development --config config/webpack.client.js",
-    "dev:server": "pnpm build:server & pnpm serve",
-    "dev": "pnpm dev:server & pnpm dev:client"
+    "serve": "node dist/server/main.js",
+    "dev": "pnpm clean && pnpm build:client && pnpm build:server && pnpm serve"
   },
   "dependencies": {
     "react": "^18.2.0",
