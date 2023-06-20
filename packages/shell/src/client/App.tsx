@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as ReactDOMClient from "react-dom/client";
 
 // @ts-expect-error @todo fix types
-import { Seach as RemoteSearch } from "searchzz/Search";
+import { Search as RemoteSearch } from "searchzz/Search";
 
 console.log("remote Search", RemoteSearch, JSON.stringify(RemoteSearch));
 
@@ -21,6 +21,7 @@ const App = () => {
   return (
     <>
       <h1>App is {hydrated ? "hydrated 😎  !" : "rendered by server 🫶 "}</h1>
+      <RemoteSearch />
     </>
   );
 };
