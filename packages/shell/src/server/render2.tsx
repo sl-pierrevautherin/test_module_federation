@@ -1,4 +1,4 @@
-import { renderToString, renderToPipeableStream } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 import App from "../client/App";

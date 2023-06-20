@@ -6,7 +6,11 @@ const pkgDependencies = require("../package.json").dependencies;
 console.log({ pkgDependencies });
 console.log(...Object.keys(pkgDependencies));
 
-const sharedDeps = [...Object.keys(pkgDependencies)].reduce((shared, name) => {
+const sharedDeps = [
+  ...Object.keys(pkgDependencies),
+  "react/jsx-runtime",
+  "react-dom/client",
+].reduce((shared, name) => {
   shared[name] = {
     eager: true,
     singleton: true,
@@ -20,9 +24,11 @@ console.log({ sharedDeps });
 
 module.exports = {
   ...shared,
+  entry: "./src/client/index.ts",
   name: "client",
-  entry: "./src/client/index.tsx",
   target: "web",
+
+  mode: "production",
   cache: false,
   output: {
     path: path.resolve(__dirname, "../dist/client"),
@@ -33,11 +39,11 @@ module.exports = {
   plugins: [
     new UniversalFederationPlugin({
       isServer: false,
-      name: "client",
-      remotes: {
-        search: "search@http://localhost:3002/client/remoteEntry.js",
-      },
+      name: "shell",
       filename: "remoteEntry.js",
+      remotes: {
+        searchzz: "searchzz@http://localhost:3002/client/remoteEntry.js",
+      },
       shared: sharedDeps,
     }),
   ],

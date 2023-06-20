@@ -4,8 +4,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "build:client": "webpack --mode production --progress --config config/webpack.client.js",
-    "build:server": "webpack --mode production --progress --config config/webpack.server.js",
-    "build": "pnpm build:server && pnpm build:client",
+    "build:server": "webpack --mode development --progress --config config/webpack.server.js",
+    "build": "pnpm clean && pnpm build:server && pnpm build:client",
     "serve": "node dist/server/main.js",
     "dev": "pnpm clean && pnpm build:client && pnpm build:server && pnpm serve"
   },
@@ -16,7 +16,6 @@
   "devDependencies": {
     "@fastify/static": "^6.10.2",
     "fastify": "^4.18.0",
-    "@module-federation/node": "0.12.2",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
     "rimraf": "3.0.2",

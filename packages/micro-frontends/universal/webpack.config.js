@@ -23,8 +23,8 @@ const baseConfig = {
 };
 
 const clientConfig = {
-  ...baseConfig,
   name: "client",
+  ...baseConfig,
   target: "web",
   output: {
     path: path.resolve(__dirname, "./dist/client"),
@@ -35,12 +35,16 @@ const clientConfig = {
   plugins: [
     new UniversalFederationPlugin({
       isServer: false,
-      name: "search",
+      name: "searchzz",
       filename: "remoteEntry.js",
       exposes: {
-        "./Search": "./src/Search",
+        "./Search": "./src/index",
       },
-      shared: [...Object.keys(pkgDependencies)].reduce((shared, moduleName) => {
+      shared: [
+        ...Object.keys(pkgDependencies),
+        "react/jsx-runtime",
+        "react-dom/client",
+      ].reduce((shared, moduleName) => {
         shared[moduleName] = {
           eager: false,
           singleton: true,
@@ -58,8 +62,8 @@ const clientConfig = {
  * @type {import('webpack').Configuration}
  */
 const serverConfig = {
-  ...baseConfig,
   name: "server",
+  ...baseConfig,
   target: false,
   output: {
     path: path.resolve(__dirname, "./dist/server"),
@@ -69,11 +73,11 @@ const serverConfig = {
   plugins: [
     new UniversalFederationPlugin({
       isServer: true,
-      name: "search",
+      name: "searchzz",
       filename: "remoteEntry.js",
-      library: { type: "commonjs-module", name: "search" },
+      library: { type: "commonjs-module", name: "searchzz" },
       exposes: {
-        "./Search": "./src/Search",
+        "./Search": "./src/index.ts",
       },
       shared: [
         ...Object.keys(pkgDependencies),

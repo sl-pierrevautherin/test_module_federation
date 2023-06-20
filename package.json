@@ -14,7 +14,8 @@
     "@types/webpack": "^5.28.1",
     "ts-loader": "9.4.2",
     "turbo": "latest",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "@module-federation/node": "0.15.1"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "test_module_federation"

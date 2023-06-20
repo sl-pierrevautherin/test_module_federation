@@ -6,9 +6,9 @@ const pkgDependencies = require("../package.json").dependencies;
 
 module.exports = {
   ...shared,
-  name: "server",
-  target: "node",
   entry: "./src/server/index.ts",
+  name: "server",
+  target: false,
 
   output: {
     path: path.resolve(__dirname, "../dist/server"),
@@ -23,13 +23,16 @@ module.exports = {
   plugins: [
     new UniversalFederationPlugin({
       isServer: true,
-      library: { type: "commonjs-module" },
-      name: "client",
-      remotes: {
-        search: "search@http://localhost:3002/server/remoteEntry.js",
-      },
+      name: "shell",
       filename: "remoteEntry.js",
-      shared: [...Object.keys(pkgDependencies)].reduce((shared, name) => {
+      remotes: {
+        searchzz: "searchzz@http://localhost:3002/server/remoteEntry.js",
+      },
+      shared: [
+        ...Object.keys(pkgDependencies),
+        "react/jsx-runtime",
+        "react-dom/client",
+      ].reduce((shared, name) => {
         shared[name] = {
           eager: true,
           singleton: true,
