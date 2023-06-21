@@ -28,11 +28,7 @@ module.exports = {
       remotes: {
         searchzz: "searchzz@http://localhost:3002/server/remoteEntry.js",
       },
-      shared: [
-        ...Object.keys(pkgDependencies),
-        "react/jsx-runtime",
-        "react-dom/client",
-      ].reduce((shared, name) => {
+      shared: [...Object.keys(pkgDependencies)].reduce((shared, name) => {
         shared[name] = {
           eager: true,
           singleton: true,

@@ -6,13 +6,9 @@ const pkgDependencies = require("../package.json").dependencies;
 console.log({ pkgDependencies });
 console.log(...Object.keys(pkgDependencies));
 
-const sharedDeps = [
-  ...Object.keys(pkgDependencies),
-  "react/jsx-runtime",
-  "react-dom/client",
-].reduce((shared, name) => {
+const sharedDeps = [...Object.keys(pkgDependencies)].reduce((shared, name) => {
   shared[name] = {
-    eager: true,
+    eager: false,
     singleton: true,
     requiredVersion: pkgDependencies[name],
   };
