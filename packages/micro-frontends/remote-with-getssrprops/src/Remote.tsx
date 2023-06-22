@@ -1,11 +1,11 @@
-export const Remote = (classifiedId) => {
+export const Remote = ({ id, data }) => {
   return (
     <>
       <div>
         Remote component - a ModuleFederation component with getServerSideProps
       </div>
-      <div>id: {}</div>
-      <div>bffData: {}</div>
+      <div>id: {id}</div>
+      <div>bffData: {JSON.stringify(data)}</div>
     </>
   );
 };

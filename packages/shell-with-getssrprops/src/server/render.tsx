@@ -1,11 +1,19 @@
 import { renderToString } from "react-dom/server";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
-import App from "../client/App";
+import App, { getServerSideProps } from "../client/App";
 
-export const render = (_: FastifyRequest, reply: FastifyReply) => {
-  const html = renderToString(<App />);
+export const render = async (
+  request: FastifyRequest<{
+    Params?: { classifiedId?: string };
+  }>,
+  reply: FastifyReply
+) => {
+  const { classifiedId } = request.params;
+  const data = await getServerSideProps(classifiedId)();
+  console.log("server data", classifiedId, data);
 
+  const html = renderToString(<App classifiedId={classifiedId} data={data} />);
   reply.type("text/html");
   reply.send(`<!DOCTYPE html>
 <html lang="en">
@@ -47,6 +55,7 @@ export const render = (_: FastifyRequest, reply: FastifyReply) => {
     <div></div>
     <div id="root">${html}</div>
     <script async data-chunk="main" src="http://localhost:3004/static/main.js"></script>
+
 </body>
 </html>`);
 };

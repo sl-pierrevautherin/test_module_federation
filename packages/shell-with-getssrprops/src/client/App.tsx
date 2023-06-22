@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import * as ReactDOMClient from "react-dom/client";
 
 // @ts-expect-error @todo fix types
-import { Remote } from "remote1/Remote";
+import { Remote, getServerSideProps } from "remote1/Remote";
 
-console.log("remote", Remote, JSON.stringify(Remote));
+type AppProps = {
+  classifiedId?: string;
+  data?: {
+    data: string;
+  };
+};
 
-const App = () => {
+const App = ({ classifiedId, data }: AppProps) => {
   const [hydrated, setHydrated] = useState(false);
+
+  console.log("App data", classifiedId, data);
 
   useEffect(() => {
     if (!hydrated) {
-      console.log("client-side render");
       setTimeout(() => {
         setHydrated(true);
       }, 2000);
@@ -21,13 +27,29 @@ const App = () => {
   return (
     <>
       <h1>App is {hydrated ? "hydrated 😎  !" : "rendered by server 🫶 "}</h1>
-      <Remote />
+      <Remote id={classifiedId} data={data} />
+      <script
+        id="__SSR_DATA__"
+        type="application/json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({ data, classifiedId }),
+        }}
+      />
     </>
   );
 };
 
 if (typeof window !== "undefined") {
-  ReactDOMClient.hydrateRoot(document.getElementById("root"), <App />);
+  const { data = "something went wrong....", classifiedId = "" } = JSON.parse(
+    // @ts-expect-error @todo fix types
+    document.getElementById("__SSR_DATA__").text
+  );
+  console.log("Retrieved data", classifiedId, data);
+  ReactDOMClient.hydrateRoot(
+    document.getElementById("root"),
+    <App classifiedId={classifiedId} data={data} />
+  );
 }
 
+export { getServerSideProps };
 export default App;

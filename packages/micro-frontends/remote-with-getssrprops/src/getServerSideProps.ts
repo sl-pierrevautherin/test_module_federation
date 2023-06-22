@@ -1,9 +1,10 @@
 import type { classifiedId, classified } from "./types";
 
-export const getServerSideProps = async (classifiedId: classifiedId) => {
+export const getServerSideProps = (classifiedId: classifiedId) => async () => {
   const response: classified = {
-    id: classifiedId,
     data: "some classified async data",
   };
-  return await setTimeout(() => response, 600);
+  return await new Promise((resolve) =>
+    setTimeout(() => resolve(response), 600)
+  );
 };

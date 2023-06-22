@@ -8,6 +8,8 @@ const fastify = Fastify({
   logger: true,
 });
 
+fastify.get("/favicon.ico", (_, reply) => reply.code(404).send());
+
 fastify.register(staticPlugin, {
   prefix: "/static/",
   root: join(process.cwd(), "./dist/client"),
@@ -16,10 +18,10 @@ fastify.register(staticPlugin, {
 const render: RouteHandler = async (_, reply) => {
   const render = (await import("./render")).default;
 
-  return render(_, reply);
+  return await render(_, reply);
 };
 
-fastify.get("*", render);
+fastify.get("/:classifiedId", render);
 
 fastify.listen({ port }, (error) => {
   if (error) {

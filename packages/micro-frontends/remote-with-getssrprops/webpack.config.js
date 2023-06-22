@@ -38,6 +38,7 @@ const mfConfig = {
   filename: "remoteEntry.js",
   exposes: {
     "./Remote": "./src/index.ts",
+    "./getServerSideProps": "./src/index.ts",
   },
   shared: [...Object.keys(pkgDependencies)].reduce((shared, moduleName) => {
     shared[moduleName] = {
